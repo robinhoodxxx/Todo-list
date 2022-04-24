@@ -23,4 +23,3 @@ const Alert = ({ alert, removealert, list }) => {
 
 export default Alert
 
-//color && color==='red' ? 'text-red-500 border-red-500':'text-green-500 border-green-500' `  rounded-md capitalize text-center my-1 py-1 border-2

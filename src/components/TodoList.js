@@ -116,7 +116,8 @@ const TodoList = () => {
 
                 <form onSubmit={handleSumbit} className='my-5 flex' >
 
-                    <input type="text" placeholder='Add Todo...'                    
+                    <input type="text" placeholder='Add Todo...'
+                        test-id='todo'                    
                         value={todo} required
                         onChange={(e) => settodo(e.target.value)}
                         className='pl-5 py-1.5  border-2 rounded-md  outline-none focus:border-pink-500 flex-1'
