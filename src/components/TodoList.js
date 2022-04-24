@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect} from 'react'
 import Alert from './Alert';
 import Todo from './Todo'
 import TotalTasks from './TotalTasks';
@@ -23,7 +23,7 @@ const TodoList = () => {
     const [editId, setEditId] = useState(null)
     const [alert, setalert] = useState({ show: false, msg: null, color: null })
 
-
+    
 
     useEffect(() => {
         localStorage.setItem('list', JSON.stringify(tasks));
@@ -52,6 +52,18 @@ const TodoList = () => {
         setEditId(id)
 
     }
+
+    const clearallTasks=()=>{
+        if(!tasks.length){
+            setalert({ show: true, msg: 'No tasks available', color: 'red' })
+            return
+        }
+            settasks([])
+            
+            setalert({ show: true, msg: 'All tasks deleted', color: 'red' })
+        
+    }
+
 
     const removealert = () => {
         setalert({ show: false, msg: '', color: '' })
@@ -86,15 +98,16 @@ const TodoList = () => {
         }
         settasks([...tasks, { id: Date.now().toString(), task: todo }])
         settodo('')
+        setalert({ show: true, msg: 'Task added ', color: 'green' })
 
-
+         
 
     }
 
 
     return (
         <main className='bg-sky-300 h-screen w-screen flex items-center justify-center '>
-            <section className='bg-white flex  justify-center max-w-max rounded-lg flex-col px-20 py-10 lg:min-w-[35%] max-h-[90%]'>
+            <section className='bg-white flex  justify-center max-w-max rounded-lg flex-col  md:px-16 px-4   py-10 min-w-[40%] max-h-[90%]'>
                 <header>
                     <h1 className='text-xl  capitalize font-medium text-center mb-5 text-blue-500'>todo list app</h1>
                 </header>
@@ -103,12 +116,12 @@ const TodoList = () => {
 
                 <form onSubmit={handleSumbit} className='my-5 flex' >
 
-                    <input type="text" placeholder='Add Todo...'
+                    <input type="text" placeholder='Add Todo...'                    
                         value={todo} required
                         onChange={(e) => settodo(e.target.value)}
                         className='pl-5 py-1.5  border-2 rounded-md  outline-none focus:border-pink-500 flex-1'
                     />
-                    <button className={`bg-pink-500 uppercase text-white rounded p-2 ml-5 shadow-lg hover:shadow-gray-400 ${editmode && 'bg-orange-500 '}`}
+                    <button className={`bg-pink-500 uppercase text-white rounded p-2 lg:mx-5 mx-2 shadow-lg hover:shadow-gray-400 ${editmode && 'bg-orange-500 '}`}
                         type='submit'>{editmode ? 'edit' : 'add'}
                     </button>
                 </form>
@@ -118,7 +131,7 @@ const TodoList = () => {
                     tasks.length > 0 && <h1 className='text-lg text-center text-red-600 capitalize font-medium my-2'>tasks</h1>
                 }
 
-                <ul className=' overflow-y-auto my-2   scroll-smooth'>
+                <ul className=' overflow-auto my-2   scroll-smooth'>
 
 
 
@@ -142,10 +155,7 @@ const TodoList = () => {
                     <TotalTasks pendingtasks={tasks.length} />
                     <button
                         className='text-white border-2 capitalize bg-pink-500 rounded-md px-2 py-1 hover:shadow-lg'
-                        onClick={() => {
-                            settasks([])
-                            setalert({ show: true, msg: 'All tasks deleted', color: 'red' })
-                        }}>
+                        onClick={clearallTasks}>
                     clear all
                     </button>
                 </footer>
