@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Alert = () => {
+const Alert = ({ alert, removealert, list }) => {
+
+  const { msg, color } = alert
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      removealert()
+    }, 1000)
+
+    return () => clearTimeout(timeout)
+  }, [list])
 
   return (
-    <div>Editing Mode</div>
+    <p className={color && `text-${color}-500 w-auto rounded-md capitalize text-center my-1 py-1 border-2 border-${color}-500`}>{msg}</p>
   )
 }
 

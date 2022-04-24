@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Alert from './Alert';
 import Todo from './Todo'
+import TotalTasks from './TotalTasks';
 
 
 
@@ -20,6 +21,8 @@ const TodoList = () => {
     const [tasks, settasks] = useState(getLocalStorage())
     const [editmode, seteditmode] = useState(false)
     const [editId, setEditId] = useState(null)
+    const [alert, setalert] = useState({ show: false, msg: null, color: null })
+
 
 
     useEffect(() => {
@@ -34,6 +37,7 @@ const TodoList = () => {
         })
 
         settasks(FilteredTasks)
+        setalert({ show: true, msg: 'Task Deleted', color: 'red' })
 
     }
 
@@ -49,12 +53,16 @@ const TodoList = () => {
 
     }
 
+    const removealert = () => {
+        setalert({ show: false, msg: '', color: '' })
+    }
+
 
     const handleSumbit = (e) => {
 
         e.preventDefault()
 
-        if (!todo) return
+
 
         if (editmode) {
 
@@ -68,10 +76,10 @@ const TodoList = () => {
 
             })
 
-            settasks(editedtasks)
-
-            settodo('')
             seteditmode(false)
+            settasks(editedtasks)
+            setalert({ show: true, msg: 'Editing completed ', color: 'green' })
+            settodo('')
 
             return
 
@@ -85,25 +93,34 @@ const TodoList = () => {
 
 
     return (
-        <main className='bg-gray-400 h-screen w-screen flex items-center justify-center '>
+        <main className='bg-sky-300 h-screen w-screen flex items-center justify-center '>
             <section className='bg-white flex  justify-center max-w-max rounded-lg flex-col px-20 py-10 lg:min-w-[35%] max-h-[90%]'>
                 <header>
-                    <h1 className='text-xl  capitalize font-medium text-center mb-5 text-green-500'>todo list app</h1>
+                    <h1 className='text-xl  capitalize font-medium text-center mb-5 text-blue-500'>todo list app</h1>
                 </header>
 
-                <form onSubmit={handleSumbit}   className='my-5 flex' >
-                
-                    <input type="text" placeholder=' Todo...'
-                        value={todo}
+                {alert.show && <Alert alert={alert} removealert={removealert} list={tasks} />}
+
+                <form onSubmit={handleSumbit} className='my-5 flex' >
+
+                    <input type="text" placeholder='Add Todo...'
+                        value={todo} required
                         onChange={(e) => settodo(e.target.value)}
                         className='pl-5 py-1.5  border-2 rounded-md  outline-none focus:border-pink-500 flex-1'
                     />
                     <button className={`bg-pink-500 uppercase text-white rounded p-2 ml-5 shadow-lg hover:shadow-gray-400 ${editmode && 'bg-orange-500 '}`}
-                        type='submit'>{editmode ? 'edit' : 'go'}
+                        type='submit'>{editmode ? 'edit' : 'add'}
                     </button>
                 </form>
 
-                <ul className=' overflow-y-auto  my-5  scroll-smooth'>
+                {
+
+                    tasks.length > 0 && <h1 className='text-lg text-center text-red-600 capitalize font-medium my-2'>tasks</h1>
+                }
+
+                <ul className=' overflow-y-auto my-2   scroll-smooth'>
+
+
 
                     {tasks.map((task, index) => {
 
@@ -119,6 +136,20 @@ const TodoList = () => {
 
                     }
                 </ul>
+
+                <footer className='flex justify-around'>
+
+                    <TotalTasks pendingtasks={tasks.length} />
+                    <button
+                        className='text-white border-2 capitalize bg-pink-500 rounded-md px-2 py-1 hover:shadow-lg'
+                        onClick={() => {
+                            settasks([])
+                            setalert({ show: true, msg: 'All tasks deleted', color: 'red' })
+                        }}>
+                    clear all
+                    </button>
+                </footer>
+
 
 
             </section>
