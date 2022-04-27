@@ -107,7 +107,7 @@ const TodoList = () => {
 
     return (
         <main className='bg-sky-300 h-screen w-screen flex items-center justify-center '>
-            <section className='bg-white flex  justify-center max-w-max rounded-lg flex-col  md:px-16 px-4   py-10 min-w-[40%] max-h-[90%]'>
+            <section className='bg-white flex  justify-center  rounded-lg flex-col  md:px-16 px-4   py-10 min-w-[280px] max-h-[90%]'>
                 <header>
                     <h1 className='text-xl  capitalize font-medium text-center mb-5 text-blue-500'>todo list app</h1>
                 </header>
@@ -132,7 +132,7 @@ const TodoList = () => {
                     tasks.length > 0 && <h1 className='text-lg text-center text-red-600 capitalize font-medium my-2'>tasks</h1>
                 }
 
-                <ul className=' overflow-auto my-2   scroll-smooth'>
+                <ul className=' overflow-auto  my-2   scroll-smooth '>
 
 
 

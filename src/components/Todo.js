@@ -7,9 +7,9 @@ const Todo = ({ props, deleted, edit }) => {
 
 
     return (
-        <li className='flex justify-between mb-5 mr-3 border-2 hover:border-sky-500 px-5 py-2 rounded-md hover:shadow-lg scroll-ml-10 '>
+        <li className='flex justify-between mb-5 mr-3  border-2  hover:border-sky-500 px-5 py-2 rounded-md hover:shadow-lg scroll-ml-10 '>
 
-            <h1 className='text-blue-600 flex font-medium'>{props.task}</h1>
+            <h1 className='text-blue-600 flex flex-col text-center overflow-auto font-medium mr-2'>{props.task}</h1>
 
             <div className='flex justify-center items-center'>
 
