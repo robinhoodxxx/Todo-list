@@ -16,13 +16,22 @@ const getLocalStorage = () => {
 };
 
 const TodoList = () => {
-
+    
     const [todo, settodo] = useState('')
     const [tasks, settasks] = useState(getLocalStorage())
     const [editmode, seteditmode] = useState(false)
     const [editId, setEditId] = useState(null)
     const [alert, setalert] = useState({ show: false, msg: null, color: null })
+     const todoref= React.useRef()
 
+
+    useEffect(()=>{
+    
+        const focus=()=>{
+        todoref.current.focus()
+    }
+         focus()
+    },[tasks,editmode])
     
 
     useEffect(() => {
@@ -61,6 +70,8 @@ const TodoList = () => {
             settasks([])
             
             setalert({ show: true, msg: 'All tasks deleted', color: 'red' })
+            seteditmode(false)
+            
         
     }
 
@@ -68,6 +79,9 @@ const TodoList = () => {
     const removealert = () => {
         setalert({ show: false, msg: '', color: '' })
     }
+
+    
+
 
 
     const handleSumbit = (e) => {
@@ -119,6 +133,7 @@ const TodoList = () => {
                     <input type="text" placeholder='Add Todo...'
                         test-id='todo'                    
                         value={todo} required
+                        ref={todoref}
                         onChange={(e) => settodo(e.target.value)}
                         className='pl-5 py-1.5  border-2 rounded-md  outline-none focus:border-pink-500 flex-1'
                     />
